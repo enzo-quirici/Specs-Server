@@ -1,5 +1,5 @@
 # Specs Server
-- Specs Server allows you to make a web server that allows you to use the "validation" function of the [Specs](https://github.com/enzo-quirici/Specs/blob/master/INSTALL.md
+- Specs Server allows you to make a web server that allows you to use the "validation" function of the [Specs](https://github.com/enzo-quirici/Specs/
   ) application.  
   ![img.png](img.png)
 ## How to install it :
@@ -29,7 +29,7 @@ CREATE TABLE system_specs (
 ```
 open the file "recevier.php" and change the information needed for the database.
 
-E.G :
+### E.G :
 ```Bash
 // Database parameters
 $host = 'localhost';     // Database host
