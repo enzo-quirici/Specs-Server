@@ -1,10 +1,8 @@
-/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: 'Poppins', sans-serif;
     background: #f0f4f8;
@@ -43,16 +41,16 @@ h1 {
 }
 
 .search-bar {
-    text-align: center; /* Centre le contenu horizontalement */
+    text-align: center;
     margin-bottom: 20px;
     margin-top: 0;
     padding: 15px 0;
 }
 
 .search-bar input, .search-bar select {
-    display: inline-block; /* Aligne les éléments côte à côte */
-    vertical-align: middle; /* Aligne verticalement */
-    margin-bottom: 20px; /* Espacement horizontal */
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 20px;
     padding: 10px;
     font-size: 16px;
 }
@@ -121,7 +119,6 @@ td img {
     margin-left: 10px;
 }
 
-/* Responsiveness */
 @media (max-width: 768px) {
     table {
         font-size: 14px;

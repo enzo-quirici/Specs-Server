@@ -1,24 +1,19 @@
 <?php
-// Database parameters
 $host = 'localhost';
 $db = 'specs';
 $user = 'root';
 $pass = '';
 $port = 4306;
 
-// Connect to the database
 $conn = new mysqli($host, $user, $pass, $db, $port);
 
-// Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to retrieve data from the system_specs table
 $sql = "SELECT os, Version, cpu, Cores, Threads, gpu, Vram, ram FROM system_specs ORDER BY timestamp DESC";
 $result = $conn->query($sql);
 
-// Functions to retrieve icon paths (same as before)
 function getOsIconPath($osName, $osVersion) {
     if (strpos(strtolower($osName), 'win') !== false) {
         if (strpos($osName, '10') !== false) return "icon/Windows 10 128x128.png";
@@ -147,7 +142,6 @@ function getRamIcon() {
 
         <h1>Specs</h1>
 
-        <!-- Search Bar -->
         <div class="search-bar">
         <input type="text" placeholder="Search for specifications..." id="searchInput">
         <select id="categorySelect">
@@ -162,7 +156,6 @@ function getRamIcon() {
             <option value="ram">RAM</option>
         </select>
 
-        <!-- Table -->
         <?php if ($result->num_rows > 0): ?>
             <table>
                 <thead>
@@ -215,7 +208,6 @@ function getRamIcon() {
     const specsTable = document.getElementById('specsTable');
     const rows = specsTable.getElementsByTagName('tr');
             
-    // Correspondance des catégories avec les colonnes
     const columnMap = {
         os: 0,
         version: 1,
@@ -227,7 +219,6 @@ function getRamIcon() {
         ram: 7
     };
     
-    // Recherche en fonction de l'entrée et de la catégorie
     searchInput.addEventListener('keyup', () => filterTable());
     categorySelect.addEventListener('change', () => filterTable());
     
@@ -240,7 +231,6 @@ function getRamIcon() {
             let match = false;
         
             if (category === "all") {
-                // Rechercher dans toutes les colonnes
                 for (let j = 0; j < cells.length; j++) {
                     if (cells[j].textContent.toLowerCase().includes(filter)) {
                         match = true;
@@ -248,7 +238,6 @@ function getRamIcon() {
                     }
                 }
             } else {
-                // Rechercher uniquement dans une colonne spécifique
                 const columnIndex = columnMap[category];
                 if (cells[columnIndex] && cells[columnIndex].textContent.toLowerCase().includes(filter)) {
                     match = true;

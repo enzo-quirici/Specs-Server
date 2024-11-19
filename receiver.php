@@ -1,35 +1,35 @@
 <?php
-// Paramètres de la base de données
+// Database parameters
 $host = 'localhost';
-$db = 'specs'; // Nom de la base de données
-$user = 'root'; // Utilisateur de la base de données
-$pass = '';     // Mot de passe
-$port = 4306;   // Port personnalisé
+$db = 'specs'; // Database name
+$user = 'root'; // Database user
+$pass = '';     // Password
+$port = 4306;   // Custom port
 
-// Connexion à la base de données
+// Connect to the database
 $conn = new mysqli($host, $user, $pass, $db, $port);
 
-// Vérifier la connexion
+// Check the connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Lire les données JSON envoyées via POST
+// Read the JSON data sent via POST
 $inputData = file_get_contents('php://input');
 
-// Afficher les données brutes pour déboguer
+// Display raw data for debugging
 echo "Raw data received: " . $inputData . "<br>";
 
-// Décoder les données JSON
+// Decode the JSON data
 $data = json_decode($inputData, true);
 
-// Vérifier si les données sont valides
+// Check if the data is valid
 if ($data === null) {
-    echo "Invalid JSON data!<br>";  // Afficher un message d'erreur si le JSON est invalide
+    echo "Invalid JSON data!<br>";  // Display an error message if the JSON is invalid
 } else {
     echo "Data decoded successfully.<br>";
 
-    // Vérifier que les champs requis sont présents
+    // Check if the required fields are present
     if (isset($data['os'], $data['cpu'], $data['gpu'], $data['ram'], $data['version'], $data['cores'], $data['threads'], $data['vram'])) {
         $os = $data['os'];
         $version = $data['version'];
@@ -40,12 +40,12 @@ if ($data === null) {
         $threads = $data['threads'];
         $vram = $data['vram'];
 
-        // Préparer la requête pour insérer les données dans la table system_specs
+        // Prepare the query to insert the data into the system_specs table
         $sql = "INSERT INTO system_specs (os, cpu, gpu, ram, version, cores, threads, vram) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // Utiliser une requête préparée pour éviter les injections SQL
+        // Use a prepared statement to prevent SQL injection
         if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param('sssssiis', $os, $cpu, $gpu, $ram, $version, $cores, $threads, $vram); // Types adaptés aux colonnes
+            $stmt->bind_param('sssssiis', $os, $cpu, $gpu, $ram, $version, $cores, $threads, $vram); // Data types matched to the columns
             if ($stmt->execute()) {
                 echo "Data saved successfully in the database.";
             } else {
@@ -60,6 +60,6 @@ if ($data === null) {
     }
 }
 
-// Fermer la connexion
+// Close the connection
 $conn->close();
 ?>
