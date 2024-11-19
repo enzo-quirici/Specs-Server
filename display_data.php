@@ -140,10 +140,12 @@ function getRamIcon() {
 </head>
 <body>
     <div class="container">
+
         <div class="image-container">
         <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
         </div>
-        <h1>System Specifications</h1>
+
+        <h1>Specs</h1>
 
         <!-- Search Bar -->
         <div class="search-bar">

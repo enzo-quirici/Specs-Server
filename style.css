@@ -34,11 +34,11 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 100px;
 }
 
 .image-container img {
-    max-width: 100px;
+    max-width: 75px;
     height: auto;
 }
 
