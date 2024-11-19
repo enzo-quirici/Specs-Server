@@ -1,12 +1,12 @@
 <?php
 // Database parameters
-$host = 'localhost';     // Database host
-$db = 'specs';           // Database name
-$user = 'root';          // Database user
-$pass = '';              // Password
-$port = 4306;            // Custom MySQL port
+$host = 'localhost';
+$db = 'specs';
+$user = 'root';
+$pass = '';
+$port = 4306;
 
-// Connect to the database with the specified port
+// Connect to the database
 $conn = new mysqli($host, $user, $pass, $db, $port);
 
 // Check the connection
@@ -14,114 +14,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to retrieve all data from the system_specs table
+// Query to retrieve data from the system_specs table
 $sql = "SELECT os, Version, cpu, Cores, Threads, gpu, Vram, ram FROM system_specs ORDER BY timestamp DESC";
-
-// Execute the query and fetch the results
 $result = $conn->query($sql);
 
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Specifications</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-        h2 {
-            text-align: center;
-            margin-top: 20px;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background-color: #ffffff;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        td img {
-            width: 40px;
-            height: 40px;
-            vertical-align: middle;
-            margin-right: 15px;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .info {
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .info span {
-            display: block;
-            text-align: left;
-            padding-left: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<h2>System Specifications Data</h2>
-
-<?php
-if ($result->num_rows > 0) {
-    // Display results in an HTML table
-    echo "<table>
-            <tr>
-                <th>OS</th>
-                <th>Version</th>
-                <th>CPU</th>
-                <th>CPU Cores</th>
-                <th>CPU Threads</th>
-                <th>GPU</th>
-                <th>VRAM</th>
-                <th>RAM</th>
-            </tr>";
-
-    // Loop through the results and display each row
-    while ($row = $result->fetch_assoc()) {
-        // Get the icon paths
-        $osIcon = getOsIconPath($row['os'], $row['Version']);
-        $cpuIcon = getCpuIcon($row['cpu']);
-        $gpuIcon = getGpuIcon($row['gpu']);
-        $ramIcon = getRamIcon();
-
-        echo "<tr>
-                <td><img src='$osIcon' alt='OS Icon'><div class='info'><span>" . htmlspecialchars($row['os']) . "</span></div></td>
-                <td><div class='info'><span>" . htmlspecialchars($row['Version']) . "</span></div></td>
-                <td><img src='$cpuIcon' alt='CPU Icon'><div class='info'><span>" . htmlspecialchars($row['cpu']) . "</span></div></td>
-                <td><div class='info'><span>" . htmlspecialchars($row['Cores']) . "</span></div></td>
-                <td><div class='info'><span>" . htmlspecialchars($row['Threads']) . "</span></div></td>
-                <td><img src='$gpuIcon' alt='GPU Icon'><div class='info'><span>" . htmlspecialchars($row['gpu']) . "</span></div></td>
-                <td><div class='info'><span>" . htmlspecialchars($row['Vram']) . " MB</span></div></td>
-                <td><img src='$ramIcon' alt='RAM Icon'><div class='info'><span>" . htmlspecialchars($row['ram']) . " MB</span></div></td>
-              </tr>";
-    }
-
-    echo "</table>";
-} else {
-    echo "No data found!";
-}
-
-$conn->close();
-
-// Functions to retrieve icon paths
-
+// Functions to retrieve icon paths (same as before)
 function getOsIconPath($osName, $osVersion) {
     if (strpos(strtolower($osName), 'win') !== false) {
         if (strpos($osName, '10') !== false) return "icon/Windows 10 128x128.png";
@@ -130,7 +27,6 @@ function getOsIconPath($osName, $osVersion) {
     } elseif (strpos(strtolower($osName), 'mac') !== false) {
         return getMacOsIconPath($osVersion);
     } elseif (strpos(strtolower($osName), 'nux') !== false) {
-        // Pass the OS version to getLinuxOsIconPath
         return getLinuxOsIconPath($osVersion);
     } else {
         return "icon/Unknown 128x128.png";
@@ -159,10 +55,7 @@ function getMacOsIconPath($osVersion) {
 }
 
 function getLinuxOsIconPath($osVersion) {
-    // Convert the OS version string to lowercase for case-insensitive matching
     $osVersion = strtolower($osVersion);
-
-    // Check for specific Linux distributions
     if (strpos($osVersion, 'ubuntu') !== false) {
         return "icon/Ubuntu Linux 128x128.png";
     } elseif (strpos($osVersion, 'debian') !== false) {
@@ -186,7 +79,7 @@ function getLinuxOsIconPath($osVersion) {
     } elseif (strpos($osVersion, 'red') !== false || strpos($osVersion, 'hat') !== false) {
         return "icon/Red Hat Linux 128x128.png";
     } else {
-        return "icon/GNU Linux 128x128.png"; // Default for generic Linux
+        return "icon/GNU Linux 128x128.png";
     }
 }
 
@@ -211,7 +104,7 @@ function getGpuIcon($gpuInfo) {
     $gpuInfo = strtolower($gpuInfo);
     if (strpos($gpuInfo, 'nvidia') !== false) {
         return "icon/Nvidia 128x128.png";
-    } elseif (strpos($gpuInfo, 'amd') !== false || strpos($gpuInfo, 'radeon') !== false) {
+    } elseif (strpos($gpuInfo, 'amd') !== false) {
         return "icon/AMD Radeon 128x128.png";
     } elseif (strpos($gpuInfo, 'intel') !== false) {
         if (strpos($gpuInfo, 'arc') !== false) {
@@ -231,7 +124,98 @@ function getGpuIcon($gpuInfo) {
         return "icon/Unknown GPU 128x128.png";
     }
 }
+
 function getRamIcon() {
     return "icon/RAM 128x128.png";
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Specifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+        <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
+        </div>
+        <h1>System Specifications</h1>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search for specifications..." id="searchInput">
+        </div>
+
+        <!-- Table -->
+        <?php if ($result->num_rows > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>OS</th>
+                        <th>Version</th>
+                        <th>CPU</th>
+                        <th>Cores</th>
+                        <th>Threads</th>
+                        <th>GPU</th>
+                        <th>VRAM</th>
+                        <th>RAM</th>
+                    </tr>
+                </thead>
+                <tbody id="specsTable">
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td class="icon-cell">
+                                <img src="<?= getOsIconPath($row['os'], $row['Version']) ?>" alt="OS Icon">
+                                <span><?= htmlspecialchars($row['os']) ?></span>
+                            </td>
+                            <td><?= htmlspecialchars($row['Version']) ?></td>
+                            <td class="icon-cell">
+                                <img src="<?= getCpuIcon($row['cpu']) ?>" alt="CPU Icon">
+                                <span><?= htmlspecialchars($row['cpu']) ?></span>
+                            </td>
+                            <td><?= htmlspecialchars($row['Cores']) ?></td>
+                            <td><?= htmlspecialchars($row['Threads']) ?></td>
+                            <td class="icon-cell">
+                                <img src="<?= getGpuIcon($row['gpu']) ?>" alt="GPU Icon">
+                                <span><?= htmlspecialchars($row['gpu']) ?></span>
+                            </td>
+                            <td><?= htmlspecialchars($row['Vram']) ?> MB</td>
+                            <td class="icon-cell">
+                                <img src="<?= getRamIcon() ?>" alt="RAM Icon">
+                                <span><?= htmlspecialchars($row['ram']) ?> MB</span>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p style="text-align: center; color: #999;">No data available.</p>
+        <?php endif; ?>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const specsTable = document.getElementById('specsTable');
+        const rows = specsTable.getElementsByTagName('tr');
+
+        searchInput.addEventListener('keyup', () => {
+            const filter = searchInput.value.toLowerCase();
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let match = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toLowerCase().includes(filter)) {
+                        match = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = match ? '' : 'none';
+            }
+        });
+    </script>
+</body>
+</html>
