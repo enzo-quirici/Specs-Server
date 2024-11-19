@@ -149,8 +149,18 @@ function getRamIcon() {
 
         <!-- Search Bar -->
         <div class="search-bar">
-            <input type="text" placeholder="Search for specifications..." id="searchInput">
-        </div>
+        <input type="text" placeholder="Search for specifications..." id="searchInput">
+        <select id="categorySelect">
+            <option value="all">All</option>
+            <option value="os">OS</option>
+            <option value="version">Version</option>
+            <option value="cpu">CPU</option>
+            <option value="cores">Cores</option>
+            <option value="threads">Threads</option>
+            <option value="gpu">GPU</option>
+            <option value="vram">VRAM</option>
+            <option value="ram">RAM</option>
+        </select>
 
         <!-- Table -->
         <?php if ($result->num_rows > 0): ?>
@@ -201,23 +211,53 @@ function getRamIcon() {
 
     <script>
         const searchInput = document.getElementById('searchInput');
-        const specsTable = document.getElementById('specsTable');
-        const rows = specsTable.getElementsByTagName('tr');
-
-        searchInput.addEventListener('keyup', () => {
-            const filter = searchInput.value.toLowerCase();
-            for (let i = 0; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                let match = false;
+    const categorySelect = document.getElementById('categorySelect');
+    const specsTable = document.getElementById('specsTable');
+    const rows = specsTable.getElementsByTagName('tr');
+            
+    // Correspondance des catégories avec les colonnes
+    const columnMap = {
+        os: 0,
+        version: 1,
+        cpu: 2,
+        cores: 3,
+        threads: 4,
+        gpu: 5,
+        vram: 6,
+        ram: 7
+    };
+    
+    // Recherche en fonction de l'entrée et de la catégorie
+    searchInput.addEventListener('keyup', () => filterTable());
+    categorySelect.addEventListener('change', () => filterTable());
+    
+    function filterTable() {
+        const filter = searchInput.value.toLowerCase();
+        const category = categorySelect.value;
+    
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let match = false;
+        
+            if (category === "all") {
+                // Rechercher dans toutes les colonnes
                 for (let j = 0; j < cells.length; j++) {
                     if (cells[j].textContent.toLowerCase().includes(filter)) {
                         match = true;
                         break;
                     }
                 }
-                rows[i].style.display = match ? '' : 'none';
+            } else {
+                // Rechercher uniquement dans une colonne spécifique
+                const columnIndex = columnMap[category];
+                if (cells[columnIndex] && cells[columnIndex].textContent.toLowerCase().includes(filter)) {
+                    match = true;
+                }
             }
-        });
+        
+            rows[i].style.display = match ? '' : 'none';
+        }
+    }
     </script>
 </body>
 </html>
