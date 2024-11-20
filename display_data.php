@@ -1,11 +1,6 @@
 <?php
-$host = 'localhost';
-$db = 'specs';
-$user = 'root';
-$pass = '';
-$port = 4306;
 
-$conn = new mysqli($host, $user, $pass, $db, $port);
+include 'database.php';
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -142,7 +137,15 @@ function getRamIcon() {
         <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
         </div>
 
+        
         <h1>Specs</h1>
+
+        <div class="button-container">
+        <a href="stats.php" class="button-link">
+        <button class="button">Stats</button>
+        </a>
+        </div>
+
 
         <div class="search-bar">
         <input type="text" placeholder="Search for specifications..." id="searchInput">

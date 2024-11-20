@@ -1,13 +1,6 @@
 <?php
 // Database parameters
-$host = 'localhost';
-$db = 'specs'; // Database name
-$user = 'root'; // Database user
-$pass = '';     // Password
-$port = 4306;   // Custom port
-
-// Connect to the database
-$conn = new mysqli($host, $user, $pass, $db, $port);
+include 'database.php';
 
 // Check the connection
 if ($conn->connect_error) {

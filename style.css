@@ -1,8 +1,11 @@
+/* General reset for margin, padding, and box-sizing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Body style */
 body {
     font-family: 'Poppins', sans-serif;
     background: #f0f4f8;
@@ -10,6 +13,7 @@ body {
     padding: 30px;
 }
 
+/* Heading style */
 h1 {
     text-align: center;
     margin-bottom: 40px;
@@ -19,6 +23,7 @@ h1 {
     color: #000000;
 }
 
+/* Container for content */
 .container {
     max-width: 1440px;
     margin: 0 auto;
@@ -28,6 +33,7 @@ h1 {
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Centering the image container */
 .image-container {
     display: flex;
     justify-content: center;
@@ -40,6 +46,46 @@ h1 {
     height: auto;
 }
 
+/* Centering the button using Flexbox */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    margin-top: 20px; /* Add space from content above */
+}
+
+.button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect */
+.button:hover {
+    background-color: #45a049;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Button focus effect */
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(57, 107, 0, 0.6);
+}
+
+/* Button active effect */
+.button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Search bar style */
 .search-bar {
     text-align: center;
     margin-bottom: 20px;
@@ -47,6 +93,7 @@ h1 {
     padding: 15px 0;
 }
 
+/* Search bar input and select */
 .search-bar input, .search-bar select {
     display: inline-block;
     vertical-align: middle;
@@ -55,6 +102,7 @@ h1 {
     font-size: 16px;
 }
 
+/* Search bar input style */
 .search-bar input {
     width: 60%;
     max-width: 600px;
@@ -66,12 +114,14 @@ h1 {
     transition: all 0.3s ease;
 }
 
+/* Focus effect for search bar */
 .search-bar select:focus,
 .search-bar input:focus {
     border-color: #4CAF50;
     box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.3);
 }
 
+/* Table styles */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -119,6 +169,7 @@ td img {
     margin-left: 10px;
 }
 
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     table {
         font-size: 14px;
@@ -126,7 +177,6 @@ td img {
 
     th, td {
         padding: 15px;
-    
     }
 
     .search-bar input {

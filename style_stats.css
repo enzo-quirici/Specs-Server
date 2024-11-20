@@ -1,0 +1,91 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    padding: 30px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #000000;
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Flexbox layout for the two sections */
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: 40px;
+}
+
+/* Table styles */
+table {
+    border-collapse: collapse;
+    width: 45%; /* Adjust width of table */
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* Style for the legends */
+.legend {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.legend div {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+
+/* SVG container styles */
+#chart-container {
+    width: 45%;
+    text-align: center;
+}
+
+/* Make the layout responsive */
+@media (max-width: 768px) {
+    .charts-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    table {
+        width: 80%;
+    }
+
+    #chart-container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 14px;
+    }
+
+    #chart-container {
+        width: 100%;
+    }
+}
