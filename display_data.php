@@ -30,6 +30,8 @@ function getOsIconPath($osName, $osVersion) {
 
 function getMacOsIconPath($osVersion) {
     $icons = [
+        "10.9" => "icon/Mac OS 10.9 128x128.png",
+        "10.10" => "icon/Mac OS 10.10 128x128.png",
         "10.11" => "icon/Mac OS 10.11 128x128.png",
         "10.12" => "icon/Mac OS 10.12 128x128.png",
         "10.13" => "icon/Mac OS 10.13 128x128.png",
