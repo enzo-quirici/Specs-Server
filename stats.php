@@ -151,14 +151,14 @@ $conn->close(); // Close the database connection
         </table>
 
         <!-- OS Pie Chart -->
-        <div id="chart-container">
+        <div id="charts-container">
             <h3>OS Pie Chart</h3>
             <?php
             $cx = 150;  // Center of the circle
             $cy = 150;  // Center of the circle
             $radius = 100;  // Radius of the circle
             $startAngle = 0;  // Starting angle
-            $osColors = ['#f5c507', '#9c9995', '#07a6f5', '#0766f5', '#0766f5'];  // Colors for the slices
+            $osColors = ['#f5c507', '#9c9995', '#07a6f5', '#0766f5', '#ff0000', '#00d9ff', '#1968c2'];  // Colors for the slices
 
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
             
@@ -208,7 +208,7 @@ $conn->close(); // Close the database connection
             <h3>CPU Pie Chart</h3>
             <?php
             $startAngle = 0;  // Starting angle for CPU pie chart
-            $cpuColors = ['#f50505', '#056df5', '#9c9995', '#189c09'];  // Colors for the CPU slices
+            $cpuColors = ['#f50505', '#056df5', '#9c9995', '#767578'];  // Colors for the CPU slices
             
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
             
@@ -258,7 +258,7 @@ $conn->close(); // Close the database connection
             <h3>GPU Pie Chart</h3>
             <?php
             $startAngle = 0;  // Starting angle for GPU pie chart
-            $gpuColors = ['#14a800', '#ff0000', '#006eff', '#a6a4a2', '#ff9d00', '#5e5e5c'];  // Colors for the GPU slices
+            $gpuColors = ['#14a800', '#ff0000', '#006eff', '#a6a4a2', '#ff9d00', '#767578'];  // Colors for the GPU slices
             
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
             
@@ -321,7 +321,8 @@ $conn->close(); // Close the database connection
         '#20B2AA',
         '#FF4500',
         '#2E8B57',
-        '#7443f0'  
+        '#7443f0',
+        '#767578'  
     ];    
     
     $ramColors = array_slice($ramColors, 0, count($ramData));

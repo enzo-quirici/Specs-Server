@@ -11,6 +11,9 @@ $result = $conn->query($sql);
 
 function getOsIconPath($osName, $osVersion) {
     if (strpos(strtolower($osName), 'win') !== false) {
+        if (strpos($osName, '7') !== false) return "icon/Windows 7 128x128.png";
+        if (strpos($osName, '8') !== false) return "icon/Windows 8 128x128.png";
+        if (strpos($osName, '8.1') !== false) return "icon/Windows 8.1 128x128.png";
         if (strpos($osName, '10') !== false) return "icon/Windows 10 128x128.png";
         if (strpos($osName, '11') !== false) return "icon/Windows 11 128x128.png";
         return "icon/Microsoft Windows 128x128.png";
