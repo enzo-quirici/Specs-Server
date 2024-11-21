@@ -27,7 +27,7 @@ CREATE TABLE system_specs (
 );
 
 ```
-open the file "recevier.php" and "display_data.php" and change the information needed for the database.
+open the file "database.php" and change the information needed for the database.
 
 ### E.G :
 ```Bash

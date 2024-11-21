@@ -151,7 +151,7 @@ $conn->close(); // Close the database connection
         </table>
 
         <!-- OS Pie Chart -->
-        <div id="charts-container">
+        <div id="chart-container">
             <h3>OS Pie Chart</h3>
             <?php
             $cx = 150;  // Center of the circle

@@ -4,14 +4,6 @@ body {
     color: #333;
     padding: 30px;
 }
-
-h1 {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2.5rem;
-    color: #000000;
-}
-
 .container {
     max-width: 1440px;
     margin: 0 auto;
@@ -21,19 +13,40 @@ h1 {
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #000000;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-top: 30px;
+    color: #000;
+}
+
+h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 20px;
+    color: #333;
+}
+
 /* Flexbox layout for the two sections (Table and Chart) */
 .charts-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: space-evenly;  /* Centrer avec un espacement égal entre les éléments */
+    align-items: flex-start;  /* Aligner en haut */
     margin-top: 40px;
 }
 
 /* Table styles */
 table {
     border-collapse: collapse;
-    width: 48%; /* Adjust width to give space for the chart */
-    margin: 20px 0;
+    width: 45%; /* Adjust width of the table */
+    margin: 20px auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
     border-radius: 10px;
     overflow: hidden;
@@ -79,9 +92,11 @@ tr:nth-child(odd) {
 
 /* SVG container styles */
 #chart-container {
-    width: 48%; /* Adjust width to match the table */
+    width: 100%;
     text-align: center;
+    
 }
+
 
 /* Make the layout responsive */
 @media (max-width: 768px) {
@@ -91,8 +106,8 @@ tr:nth-child(odd) {
     }
 
     table {
-        width: 80%; /* Table takes up more space on smaller screens */
-        font-size: 14px; /* Adjust font size for smaller screens */
+        width: 45%;  /* Largeur de chaque tableau */
+        margin: 20px auto;  /* Centrer le tableau horizontalement */
     }
 
     #chart-container {
