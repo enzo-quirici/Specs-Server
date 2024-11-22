@@ -88,6 +88,10 @@ function getCpuIcon($cpuInfo) {
         return "icon/AMD 128x128.png";
     } elseif (strpos($cpuInfo, 'apple') !== false) {
         return "icon/Apple CPU 128x128.png";
+    } elseif (strpos($cpuInfo, 'snapdragon') !== false) {
+        return "icon/Snapdragon 128x128.png";
+    } elseif (strpos($cpuInfo, 'arm') !== false) {
+        return "icon/ARM 128x128.png";
     } elseif (strpos($cpuInfo, 'virtual') !== false || strpos($cpuInfo, 'vmware') !== false) {
         return "icon/Virtual Machine CPU 128x128.png";
     } else {
@@ -109,6 +113,14 @@ function getGpuIcon($gpuInfo) {
         }
     } elseif (strpos($gpuInfo, 'apple') !== false) {
         return "icon/Apple GPU 128x128.png";
+    } elseif (strpos($gpuInfo, 'adreno') !== false) {
+        return "icon/Adreno 128x128.png";
+    } elseif (strpos($gpuInfo, 'arm') !== false) {
+        return "icon/ARM 128x128.png";
+    } elseif (strpos($gpuInfo, 'mali') !== false) {
+        return "icon/Mali GPU 128x128.png";
+    } elseif (strpos($gpuInfo, 'helio') !== false) {
+        return "icon/Helio GPU 128x128.png";
     } elseif (strpos($gpuInfo, 'vmware') !== false) {
         return "icon/VMware GPU 128x128.png";
     } elseif (strpos($gpuInfo, 'virtual') !== false) {

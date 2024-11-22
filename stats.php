@@ -3,20 +3,43 @@
 include 'database.php';
 
 // OS distribution query
-$osDistribution = $conn->query("SELECT OS, COUNT(*) as count FROM system_specs GROUP BY OS");
+$osDistribution = $conn->query("
+    SELECT 
+        CASE 
+            WHEN OS LIKE 'Windows%' THEN 'Windows' 
+            ELSE OS 
+        END AS OS, 
+        COUNT(*) as count 
+    FROM system_specs 
+    GROUP BY OS
+");
 $osLabels = [];
 $osData = [];
 $totalOs = 0;
+$osCounts = [];
 
 while ($row = $osDistribution->fetch_assoc()) {
-    $osLabels[] = $row['OS'];
-    $osData[] = $row['count'];
+    $osName = $row['OS'];
+    if (stripos($osName, 'Windows') === 0) { // Check if OS starts with "Windows"
+        $osName = 'Windows';
+    }
+    if (!isset($osCounts[$osName])) {
+        $osCounts[$osName] = 0;
+    }
+    $osCounts[$osName] += $row['count']; // Aggregate counts
     $totalOs += $row['count']; // Sum up total for OS percentages
 }
 
-// CPU distribution query (AMD, Intel, Apple, Unknown)
+// Populate labels and data arrays from aggregated counts
+foreach ($osCounts as $os => $count) {
+    $osLabels[] = $os;
+    $osData[] = $count;
+}
+
+
+// CPU distribution query with added ARM category
 $cpuDistribution = $conn->query("SELECT cpu, COUNT(*) as count FROM system_specs GROUP BY cpu");
-$cpuCategories = ['AMD' => 0, 'Intel' => 0, 'Apple' => 0, 'Unknown' => 0];
+$cpuCategories = ['AMD' => 0, 'Intel' => 0, 'Apple' => 0, 'ARM' => 0, 'Unknown' => 0];
 
 // Classify the CPU data
 while ($row = $cpuDistribution->fetch_assoc()) {
@@ -27,6 +50,13 @@ while ($row = $cpuDistribution->fetch_assoc()) {
         $cpuCategories['Intel'] += $row['count'];
     } elseif (stripos($cpu, 'Apple') !== false) {
         $cpuCategories['Apple'] += $row['count'];
+    } elseif (
+        stripos($cpu, 'ARM') !== false || 
+        stripos($cpu, 'Cortex') !== false || 
+        stripos($cpu, 'Snapdragon') !== false || 
+        stripos($cpu, 'MediaTek') !== false
+    ) {
+        $cpuCategories['ARM'] += $row['count'];
     } else {
         $cpuCategories['Unknown'] += $row['count'];
     }
@@ -36,9 +66,18 @@ $cpuLabels = array_keys($cpuCategories);
 $cpuData = array_values($cpuCategories);
 $totalCpu = array_sum($cpuData); // Total CPU count
 
-// GPU distribution query with added Apple and VM categories
+
+// GPU distribution query with added Apple, VM, and ARM categories
 $gpuDistribution = $conn->query("SELECT gpu, COUNT(*) as count FROM system_specs GROUP BY gpu");
-$gpuCategories = ['NVIDIA' => 0, 'AMD' => 0, 'Intel' => 0, 'Apple' => 0, 'GPU VM' => 0, 'Unknown' => 0];
+$gpuCategories = [
+    'NVIDIA' => 0, 
+    'AMD' => 0, 
+    'Intel' => 0, 
+    'Apple' => 0,
+    'ARM' => 0, 
+    'Virtual GPU' => 0, 
+    'Unknown' => 0
+];
 
 // Classify the GPU data with additional categories
 while ($row = $gpuDistribution->fetch_assoc()) {
@@ -51,8 +90,10 @@ while ($row = $gpuDistribution->fetch_assoc()) {
         $gpuCategories['Intel'] += $row['count'];
     } elseif (stripos($gpu, 'Apple') !== false) {
         $gpuCategories['Apple'] += $row['count'];
+    } elseif (stripos($gpu, 'arm') !== false || stripos($gpu, 'adreno') !== false || stripos($gpu, 'mali') !== false || stripos($gpu, 'helio') !== false) {  // ARM, Adreno, and Mali
+        $gpuCategories['ARM'] += $row['count'];
     } elseif (stripos($gpu, 'vm') !== false || stripos($gpu, 'virtual') !== false) {
-        $gpuCategories['GPU VM'] += $row['count'];
+        $gpuCategories['Virtual GPU'] += $row['count'];
     } else {
         $gpuCategories['Unknown'] += $row['count'];
     }
@@ -61,6 +102,7 @@ while ($row = $gpuDistribution->fetch_assoc()) {
 $gpuLabels = array_keys($gpuCategories);
 $gpuData = array_values($gpuCategories);
 $totalGpu = array_sum($gpuData); // Total GPU count
+
 
 // RAM distribution query (in MB and with ranges)
 $ramDistribution = $conn->query("SELECT ram, COUNT(*) as count FROM system_specs GROUP BY ram");
@@ -208,25 +250,33 @@ $conn->close(); // Close the database connection
             <h3>CPU Pie Chart</h3>
             <?php
             $startAngle = 0;  // Starting angle for CPU pie chart
-            $cpuColors = ['#f50505', '#056df5', '#9c9995', '#767578'];  // Colors for the CPU slices
-            
+            $cpuColors = ['#f50505', '#056df5', '#9c9995', '#ff6700', '#767578'];  // Updated colors: Added color for ARM
+
+            // Ensure SVG center and radius are defined
+            $cx = 150;  // Center X-coordinate
+            $cy = 150;  // Center Y-coordinate
+            $radius = 100;  // Circle radius
+
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
-            
+
             foreach ($cpuData as $index => $value) {
-                $angle = ($value / $totalCpu) * 360;
+                $angle = ($value / $totalCpu) * 360;  // Angle for current slice
                 $x1 = $cx + $radius * cos(deg2rad($startAngle));
                 $y1 = $cy + $radius * sin(deg2rad($startAngle));
                 $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
                 $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
-
+            
+                // Draw slice
                 echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $cpuColors[$index] . '" />';
+
+                // Update starting angle for next slice
                 $startAngle += $angle;
             }
-
+        
             echo '</svg>';
             ?>
         </div>
-
+        
         <!-- Legend for CPU -->
         <div class="legend">
             <?php foreach ($cpuLabels as $index => $label): ?>
@@ -253,29 +303,45 @@ $conn->close(); // Close the database connection
             </tbody>
         </table>
 
-        <!-- GPU Pie Chart -->
-        <div id="chart-container">
-            <h3>GPU Pie Chart</h3>
-            <?php
-            $startAngle = 0;  // Starting angle for GPU pie chart
-            $gpuColors = ['#14a800', '#ff0000', '#006eff', '#a6a4a2', '#ff9d00', '#767578'];  // Colors for the GPU slices
-            
-            echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
-            
-            foreach ($gpuData as $index => $value) {
-                $angle = ($value / $totalGpu) * 360;
-                $x1 = $cx + $radius * cos(deg2rad($startAngle));
-                $y1 = $cy + $radius * sin(deg2rad($startAngle));
-                $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
-                $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
+<!-- GPU Pie Chart -->
+<div id="chart-container">
+    <h3>GPU Pie Chart</h3>
+    <?php
+    $cx = 150; // Center X coordinate
+    $cy = 150; // Center Y coordinate
+    $radius = 100; // Radius of the pie chart
+    $startAngle = 0; // Starting angle for the pie chart
+    $gpuColors = ['#14a800', '#ff0000', '#006eff', '#a6a4a2', '#ff9d00', '#ff6700', '#767578']; // Added color for ARM category
+    
+    echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+    
+    foreach ($gpuData as $index => $value) {
+        if ($value == 0) {
+            continue; // Skip slices with zero value
+        }
+        
+        $angle = ($value / $totalGpu) * 360;
+        $x1 = $cx + $radius * cos(deg2rad($startAngle));
+        $y1 = $cy + $radius * sin(deg2rad($startAngle));
+        $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
+        $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
+        
+        // Determine if the arc is greater than 180 degrees
+        $largeArcFlag = $angle > 180 ? 1 : 0;
 
-                echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $gpuColors[$index] . '" />';
-                $startAngle += $angle;
-            }
-
-            echo '</svg>';
-            ?>
-        </div>
+        // Draw the pie slice
+        echo '<path d="M ' . $cx . ',' . $cy . 
+            ' L ' . $x1 . ',' . $y1 . 
+            ' A ' . $radius . ',' . $radius . ' 0 ' . $largeArcFlag . ',1 ' . $x2 . ',' . $y2 . 
+            ' Z" fill="' . $gpuColors[$index] . '" />';
+        
+        // Update the start angle for the next slice
+        $startAngle += $angle;
+    }
+    
+    echo '</svg>';
+    ?>
+</div>
 
         <!-- Legend for GPU -->
         <div class="legend">
@@ -312,18 +378,19 @@ $conn->close(); // Close the database connection
     $radius = 100;  // Radius of the circle
     $startAngle = 0;  // Starting angle for RAM pie chart
     $ramColors = [
-        '#ff0011',
+        '#FF5733',
+        '#FF8C00',
         '#FFD700',
-        '#ff8000',
+        '#32CD32',
         '#1E90FF',
-        '#ff00b3',
-        '#2bff00',
         '#20B2AA',
-        '#FF4500',
-        '#2E8B57',
-        '#7443f0',
-        '#767578'  
-    ];    
+        '#8A2BE2',
+        '#ADFF2F',
+        '#FF1493',
+        '#B0E0E6',
+        '#767578'
+    ];
+    
     
     $ramColors = array_slice($ramColors, 0, count($ramData));
     
