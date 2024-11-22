@@ -92,6 +92,8 @@ function getCpuIcon($cpuInfo) {
         return "icon/Snapdragon 128x128.png";
     } elseif (strpos($cpuInfo, 'arm') !== false) {
         return "icon/ARM 128x128.png";
+    } elseif (strpos($cpuInfo, 'nvidia') !== false) {
+        return "icon/Nvidia 128x128.png";
     } elseif (strpos($cpuInfo, 'virtual') !== false || strpos($cpuInfo, 'vmware') !== false) {
         return "icon/Virtual Machine CPU 128x128.png";
     } else {

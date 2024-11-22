@@ -52,9 +52,10 @@ while ($row = $cpuDistribution->fetch_assoc()) {
         $cpuCategories['Apple'] += $row['count'];
     } elseif (
         stripos($cpu, 'ARM') !== false || 
-        stripos($cpu, 'Cortex') !== false || 
+        stripos($cpu, 'Cortex') !== false ||
+        stripos($cpu, 'Nvidia') !== false || 
         stripos($cpu, 'Snapdragon') !== false || 
-        stripos($cpu, 'MediaTek') !== false
+        stripos($cpu, 'MediaTek') !== false 
     ) {
         $cpuCategories['ARM'] += $row['count'];
     } else {
