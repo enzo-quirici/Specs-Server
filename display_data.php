@@ -6,7 +6,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT os, Version, cpu, Cores, Threads, gpu, Vram, ram FROM system_specs ORDER BY timestamp DESC";
+$sql = "SELECT os, Version, cpu, Cores, Threads, gpu, Vram, ram FROM system_specs ORDER BY ID";
 $result = $conn->query($sql);
 
 function getOsIconPath($osName, $osVersion) {

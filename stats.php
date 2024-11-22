@@ -117,7 +117,7 @@ $ramCategories = [
     '16GB' => 0,
     '18GB-24GB' => 0,
     '32GB' => 0,
-    '48-64GB' => 0,
+    '48GB-64GB' => 0,
     '> 64GB' => 0,
     'Unknown' => 0
 ];
@@ -200,8 +200,7 @@ $conn->close(); // Close the database connection
             $cy = 150;  // Center of the circle
             $radius = 100;  // Radius of the circle
             $startAngle = 0;  // Starting angle
-            $osColors = ['#f5c507', '#9c9995', '#07a6f5', '#0766f5', '#ff0000', '#00d9ff', '#1968c2'];  // Colors for the slices
-
+            $osColors = ['#f5c507', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
             
             foreach ($osData as $index => $value) {
