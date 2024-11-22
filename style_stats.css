@@ -34,6 +34,58 @@ h3 {
     color: #333;
 }
 
+/* Centering the image container */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.image-container img {
+    max-width: 75px;
+    height: auto;
+}
+
+/* Centering the button using Flexbox */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    margin-top: 20px; /* Add space from content above */
+}
+
+.button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect */
+.button:hover {
+    background-color: #45a049;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Button focus effect */
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(57, 107, 0, 0.6);
+}
+
+/* Button active effect */
+.button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Flexbox layout for the two sections (Table and Chart) */
 .charts-container {
     display: flex;
@@ -96,7 +148,6 @@ tr:nth-child(odd) {
     text-align: center;
     
 }
-
 
 /* Make the layout responsive */
 @media (max-width: 768px) {

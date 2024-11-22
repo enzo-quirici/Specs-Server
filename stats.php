@@ -171,9 +171,21 @@ $conn->close(); // Close the database connection
     <title>Specs Statistics</title>
 </head>
 <body>
-    <h1>System Statistics</h1>
 
     <div class="container">
+
+    <div class="image-container">
+    <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
+    </div>
+
+    <h1>System Statistics</h1>
+
+    <div class="button-container">
+        <a href="display_data.php" class="button-link">
+        <button class="button">Specs</button>
+        </a>
+        </div>
+        
         <!-- OS Distribution Table -->
         <h2>Operating System Distribution</h2>
         <table>
