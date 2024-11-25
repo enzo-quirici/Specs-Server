@@ -91,7 +91,7 @@ while ($row = $gpuDistribution->fetch_assoc()) {
         $gpuCategories['Intel'] += $row['count'];
     } elseif (stripos($gpu, 'Apple') !== false) {
         $gpuCategories['Apple'] += $row['count'];
-    } elseif (stripos($gpu, 'arm') !== false || stripos($gpu, 'adreno') !== false || stripos($gpu, 'mali') !== false || stripos($gpu, 'helio') !== false) {  // ARM, Adreno, and Mali
+    } elseif (stripos($gpu, 'arm') !== false || stripos($gpu, 'adreno') !== false || stripos($gpu, 'mali') !== false || stripos($gpu, 'helio') !== false) {
         $gpuCategories['ARM'] += $row['count'];
     } elseif (stripos($gpu, 'vm') !== false || stripos($gpu, 'virtual') !== false) {
         $gpuCategories['Virtual GPU'] += $row['count'];
@@ -213,7 +213,7 @@ $conn->close(); // Close the database connection
             $cy = 150;  // Center of the circle
             $radius = 100;  // Radius of the circle
             $startAngle = 0;  // Starting angle
-            $osColors = ['#f5c507', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
+            $osColors = ['#f5be04', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
             
             foreach ($osData as $index => $value) {
@@ -262,7 +262,7 @@ $conn->close(); // Close the database connection
             <h3>CPU Pie Chart</h3>
             <?php
             $startAngle = 0;  // Starting angle for CPU pie chart
-            $cpuColors = ['#f50505', '#056df5', '#9c9995', '#ff6700', '#767578'];  // Updated colors: Added color for ARM
+            $cpuColors = ['#ff0514', '#0072c9', '#9c9995', '#008fbe', '#767578'];  // Updated colors: Added color for ARM
 
             // Ensure SVG center and radius are defined
             $cx = 150;  // Center X-coordinate
@@ -323,7 +323,7 @@ $conn->close(); // Close the database connection
     $cy = 150; // Center Y coordinate
     $radius = 100; // Radius of the pie chart
     $startAngle = 0; // Starting angle for the pie chart
-    $gpuColors = ['#14a800', '#ff0000', '#006eff', '#a6a4a2', '#ff9d00', '#ff6700', '#767578']; // Added color for ARM category
+    $gpuColors = ['#14a800', '#ff0514', '#0072c9', '#a6a4a2', '#008fbe', '#ff6700', '#767578']; // Added color for ARM category
     
     echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
     
@@ -390,17 +390,17 @@ $conn->close(); // Close the database connection
     $radius = 100;  // Radius of the circle
     $startAngle = 0;  // Starting angle for RAM pie chart
     $ramColors = [
-        '#FF5733',
-        '#FF8C00',
-        '#FFD700',
-        '#32CD32',
-        '#1E90FF',
-        '#20B2AA',
-        '#8A2BE2',
-        '#ADFF2F',
-        '#FF1493',
-        '#B0E0E6',
-        '#767578'
+        '#B0E0E6', /* Powder Blue */
+        '#ADFF2F', /* Green Yellow */
+        '#FFD700', /* Gold */
+        '#20B2AA', /* Light Sea Green */
+        '#32CD32', /* Lime Green */
+        '#1E90FF', /* Dodger Blue */
+        '#FF8C00', /* Dark Orange */
+        '#FF1493', /* Deep Pink */
+        '#FF5733', /* Orange Red */
+        '#8A2BE2', /* Blue Violet */
+        '#767578' /* Gray */
     ];
     
     
@@ -425,8 +425,7 @@ foreach ($ramData as $index => $value) {
     // Check calculated values for debugging
     // echo "x1: $x1, y1: $y1, x2: $x2, y2: $y2, angle: $angle <br>";
 
-    // Si l'index n'existe pas dans le tableau des couleurs, attribuer une couleur par défaut
-    $color = isset($ramColors[$index]) ? $ramColors[$index] : '#000000';  // Couleur par défaut (noir)
+    $color = isset($ramColors[$index]) ? $ramColors[$index] : '#000000';
     
     // Create the slice path (using the arc commands)
     echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $color . '" />';
