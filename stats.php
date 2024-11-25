@@ -396,7 +396,7 @@ $conn->close(); // Close the database connection
     $radius = 100;  // Radius of the circle
     $startAngle = 0;  // Starting angle for RAM pie chart
     $ramColors = [
-        '#B0E0E6', /* Powder Blue */
+        '#72a5f7', /* Powder Blue */
         '#ADFF2F', /* Green Yellow */
         '#FFD700', /* Gold */
         '#20B2AA', /* Light Sea Green */
