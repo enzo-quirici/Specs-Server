@@ -120,9 +120,9 @@ function getGpuIcon($gpuInfo) {
     } elseif (strpos($gpuInfo, 'arm') !== false) {
         return "icon/ARM 128x128.png";
     } elseif (strpos($gpuInfo, 'mali') !== false) {
-        return "icon/Mali GPU 128x128.png";
+        return "icon/Mali 128x128.png";
     } elseif (strpos($gpuInfo, 'helio') !== false) {
-        return "icon/Helio GPU 128x128.png";
+        return "icon/Helio 128x128.png";
     } elseif (strpos($gpuInfo, 'vmware') !== false) {
         return "icon/VMware GPU 128x128.png";
     } elseif (strpos($gpuInfo, 'virtual') !== false) {
