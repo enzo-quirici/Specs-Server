@@ -174,100 +174,101 @@ $conn->close(); // Close the database connection
 
     <div class="container">
 
-    <div class="image-container">
-    <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
-    </div>
+        <div class="image-container">
+            <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
+        </div>
 
-    <h1>System Statistics</h1>
+        <h1>System Statistics</h1>
 
-    <div class="button-container">
-        <a href="display_data.php" class="button-link">
-        <button class="button">Specs</button>
-        </a>
+        <div class="button-container">
+            <a href="display_data.php" class="button-link">
+                <button class="button">Specs</button>
+            </a>
         </div>
         
-        <!-- OS Distribution Table -->
-        <h2>Operating System Distribution</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>OS</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($osLabels as $index => $label): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($label) ?></td>
-                        <td><?= htmlspecialchars($osData[$index]) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <!-- OS Distribution Section -->
+        <div class="section-container">
+            <div class="table-container">
+                <h2>Operating System Distribution</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OS</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($osLabels as $index => $label): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($label) ?></td>
+                                <td><?= htmlspecialchars($osData[$index]) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-        <!-- OS Pie Chart -->
-        <div id="chart-container">
-            <h3>OS Pie Chart</h3>
-            <?php
-            $cx = 150;  // Center of the circle
-            $cy = 150;  // Center of the circle
-            $radius = 100;  // Radius of the circle
-            $startAngle = 0;  // Starting angle
-            $osColors = ['#f5be04', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
-            echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
-            
-            foreach ($osData as $index => $value) {
-                $angle = ($value / $totalOs) * 360;
-                $x1 = $cx + $radius * cos(deg2rad($startAngle));
-                $y1 = $cy + $radius * sin(deg2rad($startAngle));
-                $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
-                $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
+            <div class="chart-container">
+                <h3>OS Pie Chart</h3>
+                <?php
+                $cx = 150;
+                $cy = 150;
+                $radius = 100;
+                $startAngle = 0;
+                $osColors = ['#f5be04', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
+                echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
+                foreach ($osData as $index => $value) {
+                    $angle = ($value / $totalOs) * 360;
+                    $x1 = $cx + $radius * cos(deg2rad($startAngle));
+                    $y1 = $cy + $radius * sin(deg2rad($startAngle));
+                    $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
+                    $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
 
-                echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $osColors[$index] . '" />';
-                $startAngle += $angle;
-            }
-
-            echo '</svg>';
-            ?>
+                    echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $osColors[$index] . '" />';
+                    $startAngle += $angle;
+                }
+                echo '</svg>';
+                ?>
+                <div class="legend">
+                    <?php foreach ($osLabels as $index => $label): ?>
+                        <div style="background-color: <?= $osColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
 
-        <!-- Legend for OS -->
-        <div class="legend">
-            <?php foreach ($osLabels as $index => $label): ?>
-                <div style="background-color: <?= $osColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
-            <?php endforeach; ?>
-        </div>
+        <!-- CPU Distribution Section -->
+        <div class="section-container">
+            <div class="table-container">
+                <h2>CPU Distribution</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CPU</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($cpuLabels as $index => $label): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($label) ?></td>
+                                <td><?= htmlspecialchars($cpuData[$index]) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
 
-        <!-- CPU Distribution Table -->
-        <h2>CPU Distribution</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>CPU</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($cpuLabels as $index => $label): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($label) ?></td>
-                        <td><?= htmlspecialchars($cpuData[$index]) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+          <div class="chart-container">
+              <h3>CPU Pie Chart</h3>
+              <?php
+              $startAngle = 0;  // Starting angle for CPU pie chart
+              $cpuColors = ['#ff0514', '#0072c9', '#9c9995', '#008fbe', '#767578'];  // Updated colors: Added color for ARM
 
-        <!-- CPU Pie Chart -->
-        <div id="chart-container">
-            <h3>CPU Pie Chart</h3>
-            <?php
-            $startAngle = 0;  // Starting angle for CPU pie chart
-            $cpuColors = ['#ff0514', '#0072c9', '#9c9995', '#008fbe', '#767578'];  // Updated colors: Added color for ARM
-
-            // Ensure SVG center and radius are defined
-            $cx = 150;  // Center X-coordinate
-            $cy = 150;  // Center Y-coordinate
-            $radius = 100;  // Circle radius
+             // Ensure SVG center and radius are defined
+             $cx = 150;  // Center X-coordinate
+             $cy = 150;  // Center Y-coordinate
+             $radius = 100;  // Circle radius
 
             echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
 
@@ -277,7 +278,7 @@ $conn->close(); // Close the database connection
                 $y1 = $cy + $radius * sin(deg2rad($startAngle));
                 $x2 = $cx + $radius * cos(deg2rad($startAngle + $angle));
                 $y2 = $cy + $radius * sin(deg2rad($startAngle + $angle));
-            
+                
                 // Draw slice
                 echo '<path d="M ' . $cx . ',' . $cy . ' L ' . $x1 . ',' . $y1 . ' A ' . $radius . ' ' . $radius . ' 0 ' . ($angle > 180 ? 1 : 0) . ' 1 ' . $x2 . ',' . $y2 . ' Z" fill="' . $cpuColors[$index] . '" />';
 
@@ -287,37 +288,38 @@ $conn->close(); // Close the database connection
         
             echo '</svg>';
             ?>
-        </div>
-        
-        <!-- Legend for CPU -->
-        <div class="legend">
-            <?php foreach ($cpuLabels as $index => $label): ?>
-                <div style="background-color: <?= $cpuColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- GPU Distribution Table -->
-        <h2>GPU Distribution</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>GPU</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($gpuLabels as $index => $label): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($label) ?></td>
-                        <td><?= htmlspecialchars($gpuData[$index]) ?></td>
-                    </tr>
+            <div class="legend">
+                <?php foreach ($cpuLabels as $index => $label): ?>
+                    <div style="background-color: <?= $cpuColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
+            </div>
+        </div>
+    </div>
 
-<!-- GPU Pie Chart -->
-<div id="chart-container">
-    <h3>GPU Pie Chart</h3>
+    <!-- GPU Distribution Section -->
+    <div class="section-container">
+        <div class="table-container">
+            <h2>GPU Distribution</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>GPU</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($gpuLabels as $index => $label): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($label) ?></td>
+                            <td><?= htmlspecialchars($gpuData[$index]) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    
+    <div class="chart-container">
+        <h3>GPU Pie Chart</h3>
     <?php
     $cx = 150; // Center X coordinate
     $cy = 150; // Center Y coordinate
@@ -326,7 +328,7 @@ $conn->close(); // Close the database connection
     $gpuColors = ['#14a800', '#ff0514', '#0072c9', '#a6a4a2', '#008fbe', '#ff6700', '#767578']; // Added color for ARM category
     
     echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
-    
+
     foreach ($gpuData as $index => $value) {
         if ($value == 0) {
             continue; // Skip slices with zero value
@@ -353,36 +355,40 @@ $conn->close(); // Close the database connection
     
     echo '</svg>';
     ?>
-</div>
 
-        <!-- Legend for GPU -->
-        <div class="legend">
-            <?php foreach ($gpuLabels as $index => $label): ?>
-                <div style="background-color: <?= $gpuColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
-            <?php endforeach; ?>
+            <!-- Legend for GPU -->
+            <div class="legend">
+                <?php foreach ($gpuLabels as $index => $label): ?>
+                    <div style="background-color: <?= $gpuColors[$index] ?>;"><?= htmlspecialchars($label) ?></div>
+                <?php endforeach; ?>
+            </div>
         </div>
+    </div>
 
-<!-- RAM Distribution Table -->
-<h2>RAM Distribution</h2>
-<table>
-    <thead>
-        <tr>
-            <th>RAM</th>
-            <th>Count</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($ramLabels as $index => $label): ?>
+    <!-- RAM Distribution Section -->
+    <div class="section-container">
+    <div class="table-container">
+    <h2>RAM Distribution</h2>
+    <table>
+        <thead>
             <tr>
-                <td><?= htmlspecialchars($label) ?></td>
-                <td><?= htmlspecialchars($ramData[$index]) ?></td>
+                <th>RAM</th>
+                <th>Count</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach ($ramLabels as $index => $label): ?>
+                <tr>
+                    <td><?= htmlspecialchars($label) ?></td>
+                    <td><?= htmlspecialchars($ramData[$index]) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    </div>
 
-<!-- RAM Pie Chart -->
-<div id="chart-container">
+    <!-- RAM Pie Chart -->
+    <div class="chart-container">
     <h3>RAM Pie Chart</h3>
     <?php
     $cx = 150;  // Center of the circle
@@ -402,8 +408,7 @@ $conn->close(); // Close the database connection
         '#8A2BE2', /* Blue Violet */
         '#767578' /* Gray */
     ];
-    
-    
+
     $ramColors = array_slice($ramColors, 0, count($ramData));
     
 
@@ -412,8 +417,8 @@ $conn->close(); // Close the database connection
     // Start SVG output for RAM Pie Chart
     echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
     
-// Draw each slice based on the data
-foreach ($ramData as $index => $value) {
+    // Draw each slice based on the data
+    foreach ($ramData as $index => $value) {
     $angle = ($value / $totalRam) * 360; // Calculate angle for each slice
     
     // Calculate the x and y points for the arc
@@ -432,12 +437,11 @@ foreach ($ramData as $index => $value) {
     
     // Update the start angle for the next slice
     $startAngle += $angle;
-}
+    }
     
     // End SVG output
     echo '</svg>';
     ?>
-</div>
 
     <!-- Legend for RAM -->
         <div class="legend">
@@ -446,6 +450,7 @@ foreach ($ramData as $index => $value) {
                     <?= htmlspecialchars($label) ?>
                 </div>
             <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </body>

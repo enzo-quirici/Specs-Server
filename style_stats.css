@@ -4,13 +4,13 @@ body {
     color: #333;
     padding: 30px;
 }
+
 .container {
-    max-width: 1440px;
+    width: 1440px;
     margin: 0 auto;
-    background: #fff;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -86,22 +86,24 @@ h3 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Flexbox layout for the two sections (Table and Chart) */
-.charts-container {
+.section-container {
     display: flex;
-    justify-content: space-evenly;  /* Centrer avec un espacement égal entre les éléments */
-    align-items: flex-start;  /* Aligner en haut */
-    margin-top: 40px;
+    justify-content: space-between;
+    margin-bottom: 40px;
 }
 
-/* Table styles */
+.table-container, .chart-container {
+    width: 48%;
+}
+
 table {
+    width: 100%;
     border-collapse: collapse;
-    width: 45%; /* Adjust width of the table */
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-    border-radius: 10px;
-    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
 }
 
 th, td {
@@ -129,24 +131,55 @@ tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
-/* Style for the legends */
-.legend {
-    text-align: center;
-    margin-top: 20px;
+/* Flexbox layout for the charts-container */
+.charts-container {
+    display: flex;
+    justify-content: space-between; /* Spread elements evenly */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Space between the table and the chart */
+    margin-top: 40px;
 }
 
-.legend div {
-    display: inline-block;
-    margin: 5px;
-    padding: 5px;
-    background-color: #f0f0f0;
+/* Style for the chart and legend container */
+.chart-legend-container {
+    flex: 1; /* Allow chart and legend to take up remaining space */
+    text-align: center;
 }
 
 /* SVG container styles */
-#chart-container {
-    width: 100%;
+.chart-container {
     text-align: center;
-    
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.legend div {
+    width: 75px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .charts-container {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center;
+    }
+
+    .table-container, .chart-legend-container {
+        width: 100%; /* Take full width */
+    }
 }
 
 /* Make the layout responsive */
