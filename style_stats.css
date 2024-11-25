@@ -137,7 +137,7 @@ tr:nth-child(odd) {
     justify-content: space-between; /* Spread elements evenly */
     align-items: flex-start; /* Align items to the top */
     gap: 20px; /* Space between the table and the chart */
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 /* Style for the chart and legend container */

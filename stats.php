@@ -397,7 +397,7 @@ $conn->close(); // Close the database connection
     $startAngle = 0;  // Starting angle for RAM pie chart
     $ramColors = [
         '#72a5f7', /* Powder Blue */
-        '#ADFF2F', /* Green Yellow */
+        '#2ead0a', /* Green Yellow */
         '#FFD700', /* Gold */
         '#20B2AA', /* Light Sea Green */
         '#32CD32', /* Lime Green */
