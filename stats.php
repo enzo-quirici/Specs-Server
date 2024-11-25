@@ -453,6 +453,5 @@ $conn->close(); // Close the database connection
             </div>
         </div>
     </div>
-    
 </body>
 </html>
