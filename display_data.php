@@ -161,6 +161,9 @@ function getRamIcon() {
         <a href="stats.php" class="button-link">
         <button class="button">Stats</button>
         </a>
+        <a href="upload.html" class="button-link">
+        <button class="button">Upload</button>
+        </a>
         </div>
 
 

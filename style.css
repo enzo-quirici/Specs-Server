@@ -50,7 +50,8 @@ h1 {
 .button-container {
     display: flex;
     justify-content: center; /* Center horizontally */
-    margin-top: 20px; /* Add space from content above */
+    gap: 20px; /* Add space between buttons */
+    margin: 20px; /* Add space from content above */
 }
 
 .button {
