@@ -170,6 +170,53 @@ td img {
     margin-left: 10px;
 }
 
+/* File upload container style */
+.file-upload-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Label style for file input */
+.file-label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* File input style */
+.file-input {
+    font-size: 16px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 30px;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    width: auto;
+}
+
+/* File input focus effect */
+.file-input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.3);
+}
+
+/* Adjust file input hover effect */
+.file-input:hover {
+    background-color: #f9f9f9;
+}
+
+/* Make the file input fit nicely with other elements */
+.file-input-container {
+    margin: 20px;
+    text-align: center;
+}
+
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     table {
