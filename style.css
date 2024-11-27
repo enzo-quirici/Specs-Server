@@ -36,7 +36,7 @@ h1 {
 /* Centering the image container */
 .image-container {
     display: flex;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
     height: 100px;
 }
@@ -215,7 +215,6 @@ td img {
     margin: 20px;
     text-align: center;
 }
-
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {

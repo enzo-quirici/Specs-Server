@@ -107,6 +107,8 @@ function getGpuIcon($gpuInfo) {
         return "icon/Nvidia 128x128.png";
     } elseif (strpos($gpuInfo, 'amd') !== false) {
         return "icon/AMD Radeon 128x128.png";
+    } elseif (strpos($gpuInfo, 'radeon') !== false) {
+        return "icon/AMD Radeon 128x128.png";
     } elseif (strpos($gpuInfo, 'intel') !== false) {
         if (strpos($gpuInfo, 'arc') !== false) {
             return "icon/Intel ARC 128x128.png";
@@ -226,52 +228,6 @@ function getRamIcon() {
             <p style="text-align: center; color: #999;">No data available.</p>
         <?php endif; ?>
     </div>
-
-    <script>
-        const searchInput = document.getElementById('searchInput');
-    const categorySelect = document.getElementById('categorySelect');
-    const specsTable = document.getElementById('specsTable');
-    const rows = specsTable.getElementsByTagName('tr');
-            
-    const columnMap = {
-        os: 0,
-        version: 1,
-        cpu: 2,
-        cores: 3,
-        threads: 4,
-        gpu: 5,
-        vram: 6,
-        ram: 7
-    };
-    
-    searchInput.addEventListener('keyup', () => filterTable());
-    categorySelect.addEventListener('change', () => filterTable());
-    
-    function filterTable() {
-        const filter = searchInput.value.toLowerCase();
-        const category = categorySelect.value;
-    
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            let match = false;
-        
-            if (category === "all") {
-                for (let j = 0; j < cells.length; j++) {
-                    if (cells[j].textContent.toLowerCase().includes(filter)) {
-                        match = true;
-                        break;
-                    }
-                }
-            } else {
-                const columnIndex = columnMap[category];
-                if (cells[columnIndex] && cells[columnIndex].textContent.toLowerCase().includes(filter)) {
-                    match = true;
-                }
-            }
-        
-            rows[i].style.display = match ? '' : 'none';
-        }
-    }
-    </script>
 </body>
+<script src="script.js"></script>
 </html>

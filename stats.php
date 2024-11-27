@@ -83,13 +83,13 @@ $gpuCategories = [
 // Classify the GPU data with additional categories
 while ($row = $gpuDistribution->fetch_assoc()) {
     $gpu = $row['gpu'];
-    if (stripos($gpu, 'NVIDIA') !== false) {
+    if (stripos($gpu, 'nvidia') !== false) {
         $gpuCategories['NVIDIA'] += $row['count'];
-    } elseif (stripos($gpu, 'AMD') !== false) {
+    } elseif (stripos($gpu, 'amd') !== false || stripos($gpu, 'radeon') !== false) {
         $gpuCategories['AMD'] += $row['count'];
-    } elseif (stripos($gpu, 'Intel') !== false) {
+    } elseif (stripos($gpu, 'intel') !== false) {
         $gpuCategories['Intel'] += $row['count'];
-    } elseif (stripos($gpu, 'Apple') !== false) {
+    } elseif (stripos($gpu, 'apple') !== false) {
         $gpuCategories['Apple'] += $row['count'];
     } elseif (stripos($gpu, 'arm') !== false || stripos($gpu, 'adreno') !== false || stripos($gpu, 'mali') !== false || stripos($gpu, 'helio') !== false) {
         $gpuCategories['ARM'] += $row['count'];
