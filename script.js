@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const specsTable = document.getElementById('specsTable');
     const rows = specsTable.getElementsByTagName('tr');
 
-    // Map des colonnes pour le filtrage par catégorie
     const columnMap = {
         os: 0,
         version: 1,
@@ -21,18 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentSortColumn = -1;
-    let currentSortDirection = null; // null, 'asc', 'desc'
+    let currentSortDirection = null;
 
-    // Tri des lignes
     thx.forEach((th, index) => {
         th.addEventListener('click', () => {
             const isAscending = currentSortColumn === index && currentSortDirection === 'asc';
 
-            // Met à jour la direction et la colonne de tri actuelle
             currentSortDirection = isAscending ? 'desc' : 'asc';
             currentSortColumn = index;
 
-            // Trie les lignes
             const sortedRows = Array.from(trxb).sort((row1, row2) => {
                 const tdValue = (row, idx) => row.children[idx].textContent.trim();
                 const v1 = tdValue(row1, index);
@@ -46,12 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     : v1.localeCompare(v2);
             });
 
-            // Réinsère les lignes triées
             sortedRows.forEach(row => tbody.appendChild(row));
         });
     });
 
-    // Filtrage des lignes
     searchInput.addEventListener('keyup', filterTable);
     categorySelect.addEventListener('change', filterTable);
 
