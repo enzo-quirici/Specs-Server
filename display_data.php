@@ -63,6 +63,8 @@ function getLinuxOsIconPath($osVersion) {
         return "icon/Arch Linux 128x128.png";
     } elseif (strpos($osVersion, 'pop') !== false) {
         return "icon/POP OS Linux 128x128.png";
+    } elseif (strpos($osVersion, 'mint') !== false) {
+        return "icon/Linux Mint 128x128.png";
     } elseif (strpos($osVersion, 'zorin') !== false) {
         return "icon/Zorin OS Linux 128x128.png";
     } elseif (strpos($osVersion, 'manjaro') !== false) {
@@ -78,12 +80,22 @@ function getLinuxOsIconPath($osVersion) {
     }
 }
 
-
-
 function getCpuIcon($cpuInfo) {
     $cpuInfo = strtolower($cpuInfo);
+
     if (strpos($cpuInfo, 'intel') !== false) {
-        return "icon/Intel 128x128.png";
+        if (preg_match('/(\d+)th gen/', $cpuInfo, $matches)) {
+            $generation = (int)$matches[1];
+            if ($generation < 12) {
+                return "icon/Intel 11 Below 128x128.png";
+            } else {
+                return "icon/Intel 12 After 128x128.png";
+            }
+        } else {
+            return "icon/Intel Legacy 128x128.png";
+        }    
+    } elseif (strpos($cpuInfo, 'ryzen') !== false) {
+        return "icon/AMD Ryzen 128x128.png";
     } elseif (strpos($cpuInfo, 'amd') !== false) {
         return "icon/AMD 128x128.png";
     } elseif (strpos($cpuInfo, 'apple') !== false) {
