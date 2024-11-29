@@ -187,7 +187,7 @@ $conn->close(); // Close the database connection
         </label>
         </div>
         
-        <a><b>Toogle Dark Mode</b></a>
+        <a><b>Toggle Dark Mode</b></a>
         
         <div class="button-container">
             <a href="display_data.php" class="button-link">

@@ -169,7 +169,7 @@ function getRamIcon() {
         </div>
 
         <h1>Specs</h1>
-        
+
         <div class="switch-container">
         <label class="switch">
         <input type="checkbox" id="darkModeToggle">
@@ -177,7 +177,7 @@ function getRamIcon() {
         </label>
         </div>
 
-        <a><b>Toogle Dark Mode</b></a>
+        <a><b>Toggle Dark Mode</b></a>
 
         <div class="button-container">
         <a href="stats.php" class="button-link">
