@@ -75,3 +75,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+// Fonction pour activer/désactiver le mode sombre
+function toggleDarkMode() {
+    const body = document.body;
+    const switchInput = document.getElementById('darkModeToggle');
+  
+    // Si le switch est coché, on active le dark mode
+    if (switchInput.checked) {
+      body.classList.add('dark-mode');
+      localStorage.setItem('darkMode', 'enabled'); // Enregistrer dans le localStorage
+    } else {
+      body.classList.remove('dark-mode');
+      localStorage.setItem('darkMode', 'disabled'); // Enregistrer dans le localStorage
+    }
+  }
+  
+  // Vérifier si le dark mode était activé précédemment dans le localStorage
+  function checkDarkMode() {
+    const darkModeStatus = localStorage.getItem('darkMode');
+    const switchInput = document.getElementById('darkModeToggle');
+    const body = document.body;
+  
+    // Si le dark mode était activé, on applique la classe "dark-mode"
+    if (darkModeStatus === 'enabled') {
+      body.classList.add('dark-mode');
+      switchInput.checked = true; // Coche le switch
+    } else {
+      body.classList.remove('dark-mode');
+      switchInput.checked = false; // Décoche le switch
+    }
+  }
+  
+  // Initialisation de la page
+  document.addEventListener('DOMContentLoaded', () => {
+    checkDarkMode(); // Vérifie et applique le dark mode au chargement de la page
+  
+    // Écouteur d'événements sur le switch
+    const switchInput = document.getElementById('darkModeToggle');
+    switchInput.addEventListener('change', toggleDarkMode); // Toggle le dark mode lors du changement de l'état du switch
+  });
+  

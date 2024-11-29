@@ -1,16 +1,35 @@
+:root {
+    --background-light: #f0f4f8;
+    --background-dark: #000000;
+    --text-light: #333;
+    --text-dark: #ffffff;
+    --button-bg: #4CAF50;
+    --button-hover-bg: #45a049;
+    --button-active-bg: #3e8e41;
+    --button-focus-outline: #4CAF50;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
-    background: #f0f4f8;
-    color: #333;
+    background-color: var(--background-light);
+    color: var(--text-light);
     padding: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+}
+
+body.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
 }
 
 .container {
-    width: 1440px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -20,6 +39,11 @@ h1 {
     color: #000000;
 }
 
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
+
 h2 {
     text-align: center;
     font-size: 1.8rem;
@@ -27,11 +51,19 @@ h2 {
     color: #000;
 }
 
+body.dark-mode h2 {
+    color: #ffffff;
+}
+
 h3 {
     text-align: center;
     font-size: 1.4rem;
     margin-top: 20px;
     color: #333;
+}
+
+body.dark-mode h3 {
+    color: #ffffff;
 }
 
 /* Centering the image container */
@@ -52,6 +84,11 @@ h3 {
     display: flex;
     justify-content: center; /* Center horizontally */
     margin-top: 20px; /* Add space from content above */
+}
+
+body.dark-mode .container {
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .button {
@@ -100,6 +137,31 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+}
+
+body.dark-mode table, body.dark-mode th, body.dark-mode td {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode th {
+    background-color: #444;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #444; 
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+body.dark-mode tr:nth-child(odd) {
+    background-color: #333;
 }
 
 table, th, td {
@@ -168,6 +230,59 @@ tr:nth-child(odd) {
     justify-content: center;
     color: #fff;
     font-size: 12px;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #bbbbbb;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #89C445;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #89C445;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 /* Responsive adjustments */

@@ -180,6 +180,15 @@ $conn->close(); // Close the database connection
 
         <h1>System Statistics</h1>
 
+        <div class="switch-container">
+        <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+        </label>
+        </div>
+        
+        <a><b>Toogle Dark Mode</b></a>
+        
         <div class="button-container">
             <a href="display_data.php" class="button-link">
                 <button class="button">Specs</button>
@@ -454,4 +463,5 @@ $conn->close(); // Close the database connection
         </div>
     </div>
 </body>
+<script src="script.js"></script>
 </html>

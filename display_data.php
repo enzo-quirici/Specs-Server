@@ -168,8 +168,16 @@ function getRamIcon() {
         <img src="<?= "icon/Icon 128x128.png" ?>" alt="Icon">
         </div>
 
-        
         <h1>Specs</h1>
+        
+        <div class="switch-container">
+        <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+        </label>
+        </div>
+
+        <a><b>Toogle Dark Mode</b></a>
 
         <div class="button-container">
         <a href="stats.php" class="button-link">
@@ -177,9 +185,8 @@ function getRamIcon() {
         </a>
         <a href="upload.html" class="button-link">
         <button class="button">Upload</button>
-        </a>
+        </a>        
         </div>
-
 
         <div class="search-bar">
         <input type="text" placeholder="Search for specifications..." id="searchInput">

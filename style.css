@@ -1,29 +1,41 @@
-/* General reset for margin, padding, and box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --background-light: #f0f4f8;
+    --background-dark: #000000;
+    --text-light: #333;
+    --text-dark: #ffffff;
+    --button-bg: #4CAF50;
+    --button-hover-bg: #45a049;
+    --button-active-bg: #3e8e41;
+    --button-focus-outline: #4CAF50;
 }
 
-/* Body style */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #f0f4f8;
-    color: #333;
+    background-color: var(--background-light);
+    color: var(--text-light);
     padding: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
 }
 
-/* Heading style */
+body.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+}
+
 h1 {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
     font-size: 2.5rem;
     color: #000000;
 }
 
-/* Container for content */
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
 .container {
     max-width: 1440px;
     margin: 0 auto;
@@ -33,7 +45,10 @@ h1 {
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Centering the image container */
+body.dark-mode .container {
+    background-color: #333;
+}
+
 .image-container {
     display: flex;
     justify-content: center; 
@@ -55,7 +70,7 @@ h1 {
 }
 
 .button {
-    background-color: #4CAF50;
+    background-color: var(--button-bg);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -69,15 +84,15 @@ h1 {
 
 /* Button hover effect */
 .button:hover {
-    background-color: #45a049;
+    background-color: var(--button-hover-bg);
     transform: translateY(-4px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Button focus effect */
 .button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(57, 107, 0, 0.6);
+    outline: 2px solid var(--button-focus-outline);
+    outline-offset: 4px;
 }
 
 /* Button active effect */
@@ -118,7 +133,7 @@ h1 {
 /* Focus effect for search bar */
 .search-bar select:focus,
 .search-bar input:focus {
-    border-color: #4CAF50;
+    border-color: var(--button-bg);
     box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.3);
 }
 
@@ -136,7 +151,7 @@ th, td {
 }
 
 th {
-    background-color: #4CAF50;
+    background-color: var(--button-bg);
     color: white;
     text-transform: uppercase;
     font-size: 14px;
@@ -146,6 +161,89 @@ th {
 tr:hover {
     background-color: #f9f9f9;
     border-bottom: 0px solid #f0f0f0;
+}
+body.dark-mode table {
+    background-color: #1a1919;
+}
+
+body.dark-mode th {
+    background-color: #222222;
+    color: #fff;
+}
+
+body.dark-mode tr {
+    background-color: #424242;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #888888;
+}
+
+body.dark-mode tr:hover {
+    background-color: #818181;
+}
+
+body.dark-mode td {
+    color: #fff;
+}
+
+body.dark-mode td img {
+    border: none;
+}
+
+
+.switch-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 5px;
+  }
+
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #bbbbbb;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #89C445;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #89C445;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 tr:nth-child(even) {
@@ -182,7 +280,7 @@ td img {
     font-size: 16px;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #4CAF50;
+    color: var(--button-bg);
 }
 
 /* File input style */
@@ -201,7 +299,7 @@ td img {
 
 /* File input focus effect */
 .file-input:focus {
-    border-color: #4CAF50;
+    border-color: var(--button-bg);
     box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.3);
 }
 
@@ -238,5 +336,16 @@ td img {
 
     .search-bar input {
         width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .search-bar input {
+        width: 90%;
     }
 }
