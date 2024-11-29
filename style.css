@@ -218,7 +218,7 @@ body.dark-mode td img {
   right: 0;
   bottom: 0;
   background-color: #bbbbbb;
-  transition: 0.4s;
+  transition: 0.3s;
   border-radius: 34px;
 }
 
@@ -230,7 +230,7 @@ body.dark-mode td img {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: 0.4s;
+  transition: 0.3s;
   border-radius: 50%;
 }
 
