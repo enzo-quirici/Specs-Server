@@ -1,5 +1,5 @@
 # Specs Server
-- Specs Server allows you to make a web server that allows you to use the "validation" function of the [Specs](https://github.com/enzo-quirici/Specs/
+- Specs Server allows you to make a web server that allows you to use the validation function of the [Specs](https://github.com/enzo-quirici/Specs/
   ) application.  
   ![img.png](img.png)
 ## How to install it :
