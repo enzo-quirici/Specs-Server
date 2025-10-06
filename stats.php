@@ -102,7 +102,7 @@ while ($row = $gpuDistribution->fetch_assoc()) {
 
 $gpuLabels = array_keys($gpuCategories);
 $gpuData = array_values($gpuCategories);
-$totalGpu = array_sum($gpuData); // Total GPU count
+$totalGpu = array_sum($gpuData);
 
 
 // RAM distribution query (in MB and with ranges)
