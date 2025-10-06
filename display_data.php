@@ -25,7 +25,9 @@ function getOsIconPath($osName, $osVersion) {
         return getMacOsIconPath($osVersion);
     } elseif (strpos($osNameLower, 'nux') !== false) {
         return getLinuxOsIconPath($osVersion);
-    } else {
+     } elseif (strpos($osNameLower, 'bsd') !== false) {
+        return getBsdOsIconPath($osVersion);
+     } else {
         return "icon/Unknown 128x128.png";
     }
 }
@@ -92,6 +94,21 @@ function getLinuxOsIconPath($osVersion) {
         return "icon/Red Hat Linux 128x128.png";
     } else {
         return "icon/GNU Linux 128x128.png";
+    }
+}
+
+    function getBsdOsIconPath($osVersion) {
+    $osVersion = strtolower($osVersion);
+    if (strpos($osVersion, 'free') !== false) {
+        return "icon/Free BSD 128x128.png";
+    } elseif (strpos($osVersion, 'open') !== false) {
+        return "icon/Open BSD 128x128.png";
+    } elseif (strpos($osVersion, 'net') !== false) {
+        return "icon/Net BSD 128x128.png";
+    } elseif (strpos($osVersion, 'ghost') !== false) {
+        return "icon/Ghost BSD 128x128.png";
+    } else {
+        return "icon/BSD 128x128.png";
     }
 }
 
