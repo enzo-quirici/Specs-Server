@@ -20,14 +20,14 @@ $osCounts = [];
 
 while ($row = $osDistribution->fetch_assoc()) {
     $osName = $row['OS'];
-    if (stripos($osName, 'Windows') === 0) { // Check if OS starts with "Windows"
+    if (stripos($osName, 'Windows') === 0) {
         $osName = 'Windows';
     }
     if (!isset($osCounts[$osName])) {
         $osCounts[$osName] = 0;
     }
-    $osCounts[$osName] += $row['count']; // Aggregate counts
-    $totalOs += $row['count']; // Sum up total for OS percentages
+    $osCounts[$osName] += $row['count'];
+    $totalOs += $row['count'];
 }
 
 // Populate labels and data arrays from aggregated counts
