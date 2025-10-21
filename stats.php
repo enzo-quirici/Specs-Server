@@ -1,8 +1,6 @@
 <?php
-// Include your database connection here
 include 'database.php';
 
-// OS distribution query
 $osDistribution = $conn->query("
     SELECT 
         CASE 
@@ -30,18 +28,15 @@ while ($row = $osDistribution->fetch_assoc()) {
     $totalOs += $row['count'];
 }
 
-// Populate labels and data arrays from aggregated counts
 foreach ($osCounts as $os => $count) {
     $osLabels[] = $os;
     $osData[] = $count;
 }
 
 
-// CPU distribution query with added ARM category
 $cpuDistribution = $conn->query("SELECT cpu, COUNT(*) as count FROM system_specs GROUP BY cpu");
 $cpuCategories = ['AMD' => 0, 'Intel' => 0, 'Apple' => 0, 'ARM' => 0, 'Unknown' => 0];
 
-// Classify the CPU data
 while ($row = $cpuDistribution->fetch_assoc()) {
     $cpu = $row['cpu'];
     if (stripos($cpu, 'AMD') !== false) {
@@ -65,10 +60,9 @@ while ($row = $cpuDistribution->fetch_assoc()) {
 
 $cpuLabels = array_keys($cpuCategories);
 $cpuData = array_values($cpuCategories);
-$totalCpu = array_sum($cpuData); // Total CPU count
+$totalCpu = array_sum($cpuData);
 
 
-// GPU distribution query with added Apple, VM, and ARM categories
 $gpuDistribution = $conn->query("SELECT gpu, COUNT(*) as count FROM system_specs GROUP BY gpu");
 $gpuCategories = [
     'NVIDIA' => 0, 
@@ -272,7 +266,7 @@ $conn->close(); // Close the database connection
               <h3>CPU Pie Chart</h3>
               <?php
               $startAngle = 0;  // Starting angle for CPU pie chart
-              $cpuColors = ['#ff0514', '#0072c9', '#9c9995', '#008fbe', '#767578'];  // Updated colors: Added color for ARM
+              $cpuColors = ['#ff0514', '#0072c9', '#9c9995', '#008fbe', '#767578'];
 
              // Ensure SVG center and radius are defined
              $cx = 150;  // Center X-coordinate
@@ -334,7 +328,7 @@ $conn->close(); // Close the database connection
     $cy = 150; // Center Y coordinate
     $radius = 100; // Radius of the pie chart
     $startAngle = 0; // Starting angle for the pie chart
-    $gpuColors = ['#14a800', '#ff0514', '#0072c9', '#a6a4a2', '#008fbe', '#ff6700', '#767578']; // Added color for ARM category
+    $gpuColors = ['#14a800', '#ff0514', '#0072c9', '#a6a4a2', '#008fbe', '#ff6700', '#767578'];
     
     echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
 
@@ -428,7 +422,7 @@ $conn->close(); // Close the database connection
     
     // Draw each slice based on the data
     foreach ($ramData as $index => $value) {
-    $angle = ($value / $totalRam) * 360; // Calculate angle for each slice
+    $angle = ($value / $totalRam) * 360;
     
     // Calculate the x and y points for the arc
     $x1 = $cx + $radius * cos(deg2rad($startAngle));
