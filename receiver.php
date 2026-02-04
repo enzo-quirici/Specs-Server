@@ -9,88 +9,114 @@ if ($conn->connect_error) {
 
 // Function to handle JSON data and insert into database
 function handleJsonData($jsonData, $conn) {
-    // Decode the JSON data
+
+    // Decode JSON
     $data = json_decode($jsonData, true);
 
-    // Check if the JSON is valid
     if ($data === null) {
-        echo "Invalid JSON data!";
-        // Redirect to display_data.php with an error message
         header("Location: display_data.php?status=error&message=Invalid%20JSON%20data");
         exit();
     }
 
-    // Check if the required fields are present
-    if (isset($data['os'], $data['cpu'], $data['gpu'], $data['ram'], $data['version'], $data['cores'], $data['threads'], $data['vram'])) {
-        $os = $data['os'];
-        $version = $data['version'];
-        $cpu = $data['cpu'];
-        $gpu = $data['gpu'];
-        $ram = $data['ram'];
-        $cores = $data['cores'];
-        $threads = $data['threads'];
-        $vram = $data['vram'];
+    // Required fields (minimum viable payload)
+    if (
+        !isset(
+            $data['os'],
+            $data['version'],
+            $data['cpu'],
+            $data['gpu'],
+            $data['ram'],
+            $data['cores'],
+            $data['threads'],
+            $data['vram']
+        )
+    ) {
+        header("Location: display_data.php?status=error&message=Missing%20required%20data");
+        exit();
+    }
 
-        // Prepare the query to insert the data into the system_specs table
-        $sql = "INSERT INTO system_specs (os, cpu, gpu, ram, version, cores, threads, vram) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    // Optional fields (NULL allowed)
+    $device      = $data['device']      ?? null;
+    $owner       = $data['owner']       ?? null;
+    $denomination = $data['denomination'] ?? null;   // ← AJOUTÉ ICI
 
-        // Use a prepared statement to prevent SQL injection
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param('sssssiis', $os, $cpu, $gpu, $ram, $version, $cores, $threads, $vram);
-            if ($stmt->execute()) {
-                // Redirect to display_data.php with success message
-                header("Location: display_data.php?status=success&message=Data%20saved%20successfully.");
-                exit();
-            } else {
-                echo "Error saving data: " . $conn->error;
-                // Redirect to display_data.php with an error message
-                header("Location: display_data.php?status=error&message=Error%20saving%20data.");
-                exit();
-            }
-            $stmt->close();
+    // Required fields
+    $os      = $data['os'];
+    $version = $data['version'];
+    $cpu     = $data['cpu'];
+    $gpu     = $data['gpu'];
+
+    // Force numeric values + gestion "N/A" ou chaînes non numériques
+    $ram     = (int)$data['ram'];
+    $cores   = (int)$data['cores'];
+    $threads = (int)$data['threads'];
+    $vram    = is_numeric($data['vram']) ? (int)$data['vram'] : null;
+
+    // SQL avec le nouveau champ denomination
+    $sql = "
+        INSERT INTO system_specs
+        (device, owner, denomination, os, version, cpu, cores, threads, gpu, vram, ram)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ";
+
+    if ($stmt = $conn->prepare($sql)) {
+
+        /*
+         * Types (11 paramètres maintenant) :
+         * s = string
+         * i = integer
+         */
+        $stmt->bind_param(
+            "ssssssiissi",           // ← un 's' supplémentaire pour denomination
+            $device,
+            $owner,
+            $denomination,           // ← AJOUTÉ ICI
+            $os,
+            $version,
+            $cpu,
+            $cores,
+            $threads,
+            $gpu,
+            $vram,
+            $ram
+        );
+
+        if ($stmt->execute()) {
+            header("Location: display_data.php?status=success&message=Data%20saved%20successfully");
+            exit();
         } else {
-            echo "Error: " . $conn->error;
-            // Redirect to display_data.php with an error message
-            header("Location: display_data.php?status=error&message=Database%20query%20failed.");
+            header("Location: display_data.php?status=error&message=Error%20saving%20data: " . $stmt->error);
             exit();
         }
+
+        $stmt->close();
+
     } else {
-        echo "Missing required data!";
-        // Redirect to display_data.php with an error message
-        header("Location: display_data.php?status=error&message=Missing%20required%20data.");
+        header("Location: display_data.php?status=error&message=Database%20query%20failed: " . $conn->error);
         exit();
     }
 }
 
-// Check if there is raw JSON data in php://input
+// ===== INPUT HANDLING =====
 $inputData = file_get_contents('php://input');
-if (!empty($inputData)) {
-    echo "Processing JSON data from raw POST request...<br>";
-    handleJsonData($inputData, $conn);
-} elseif (isset($_FILES['jsonFile']) && $_FILES['jsonFile']['error'] === UPLOAD_ERR_OK) {
-    // If no raw JSON, check for uploaded file
-    $fileTmpPath = $_FILES['jsonFile']['tmp_name'];
-    $fileName = $_FILES['jsonFile']['name'];
-    $fileType = $_FILES['jsonFile']['type'];
 
-    // Ensure the uploaded file is a JSON file
-    if ($fileType === 'application/json') {
-        echo "Processing JSON data from uploaded file...<br>";
-        $fileContent = file_get_contents($fileTmpPath);
+if (!empty($inputData)) {
+    handleJsonData($inputData, $conn);
+
+} elseif (isset($_FILES['jsonFile']) && $_FILES['jsonFile']['error'] === UPLOAD_ERR_OK) {
+
+    if ($_FILES['jsonFile']['type'] === 'application/json') {
+        $fileContent = file_get_contents($_FILES['jsonFile']['tmp_name']);
         handleJsonData($fileContent, $conn);
     } else {
-        echo "Uploaded file is not a valid JSON file!";
-        // Redirect to display_data.php with an error message
-        header("Location: display_data.php?status=error&message=Uploaded%20file%20is%20not%20a%20valid%20JSON%20file.");
+        header("Location: display_data.php?status=error&message=Uploaded%20file%20is%20not%20a%20valid%20JSON%20file");
         exit();
     }
+
 } else {
-    echo "No JSON data provided!";
-    // Redirect to display_data.php with an error message
-    header("Location: display_data.php?status=error&message=No%20JSON%20data%20provided.");
+    header("Location: display_data.php?status=error&message=No%20JSON%20data%20provided");
     exit();
 }
 
-// Close the connection
 $conn->close();
 ?>

@@ -25,7 +25,7 @@ body.dark-mode {
 
 h1 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 70px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
     font-size: 2.5rem;
@@ -138,16 +138,42 @@ body.dark-mode .container {
 }
 
 /* Table styles */
-table {
+.table-container {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 16px;
+    max-width: 100%;                /* Ne dépasse jamais la largeur de l'écran */
+    overflow-x: auto;               /* Scroll horizontal quand nécessaire */
+    overflow-y: hidden;
+    margin: 20px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
+body.dark-mode .table-container {
+    border-color: #444;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+/* Le tableau ne doit JAMAIS forcer un dépassement */
+table {
+    width: auto;                    /* ← CHANGEMENT IMPORTANT */
+    min-width: 100%;                /* au moins la largeur du wrapper */
+    max-width: none;                /* autorise à être très large */
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+/* Empêche les cellules de se casser bêtement */
 th, td {
-    text-align: center;
-    padding: 20px;
-    border-bottom: 0px solid #f0f0f0;
+    padding: 14px 16px;
+    white-space: nowrap;            /* texte sur une seule ligne */
+    text-align: left;
+}
+
+/* Sauf pour les cellules avec icône + texte */
+.icon-cell {
+    white-space: normal;
+    min-width: 220px;               /* confortable pour OS/CPU/GPU */
 }
 
 th {
@@ -157,6 +183,19 @@ th {
     font-size: 14px;
     border-bottom: 0px solid #f0f0f0;
 }
+
+/* Largeurs minimales pour éviter que ça devienne illisible */
+th:nth-child(1), td:nth-child(1)  { min-width: 220px; } /* OS */
+th:nth-child(2), td:nth-child(2)  { min-width: 140px; } /* Version */
+th:nth-child(3), td:nth-child(3)  { min-width: 240px; } /* CPU */
+th:nth-child(4), td:nth-child(4)  { min-width:  90px; } /* Cores */
+th:nth-child(5), td:nth-child(5)  { min-width:  90px; } /* Threads */
+th:nth-child(6), td:nth-child(6)  { min-width: 220px; } /* GPU */
+th:nth-child(7), td:nth-child(7)  { min-width: 100px; } /* VRAM */
+th:nth-child(8), td:nth-child(8)  { min-width: 100px; } /* RAM */
+th:nth-child(9),  td:nth-child(9) { min-width: 150px; } /* Owner */
+th:nth-child(10), td:nth-child(10){ min-width: 180px; } /* Denomination */
+th:nth-child(11), td:nth-child(11){ min-width: 120px; } /* Device */
 
 tr:hover {
     background-color: #f9f9f9;
@@ -176,11 +215,11 @@ body.dark-mode tr {
 }
 
 body.dark-mode tr:nth-child(even) {
-    background-color: #707070;
+    background-color: #888888;
 }
 
 body.dark-mode tr:hover {
-    background-color: #5c5c5c;
+    background-color: #818181;
 }
 
 body.dark-mode td {
@@ -218,7 +257,7 @@ body.dark-mode td img {
   right: 0;
   bottom: 0;
   background-color: #bbbbbb;
-  transition: 0.3s;
+  transition: 0.4s;
   border-radius: 34px;
 }
 
@@ -230,7 +269,7 @@ body.dark-mode td img {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: 0.3s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 
@@ -312,6 +351,40 @@ td img {
 .file-input-container {
     margin: 20px;
     text-align: center;
+}
+
+/* Conteneur qui limite la largeur et active le scroll */
+.table-wrapper {
+    width: 100%;                    /* prend toute la largeur disponible dans .container */
+    max-width: 100%;                /* jamais plus large que le parent */
+    overflow-x: auto;               /* ← LA barre de scroll apparaît ICI */
+    overflow-y: hidden;
+    margin: 1.5rem 0;
+    -webkit-overflow-scrolling: touch; /* scroll fluide sur mobile */
+}
+
+/* Style de la barre de scroll (optionnel mais joli) */
+.table-wrapper::-webkit-scrollbar {
+    height: 9px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Mode sombre pour la scrollbar */
+body.dark-mode .table-wrapper::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+body.dark-mode .table-wrapper::-webkit-scrollbar-thumb {
+    background: #666;
 }
 
 /* Responsive design for smaller screens */
