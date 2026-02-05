@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         threads: 4,
         gpu: 5,
         vram: 6,
-        ram: 7
+        ram: 7,
+        owner: 8,
+        denomination: 9,
+        device: 10
     };
 
     let currentSortColumn = -1;
