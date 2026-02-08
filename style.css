@@ -387,6 +387,32 @@ body.dark-mode .table-wrapper::-webkit-scrollbar-thumb {
     background: #666;
 }
 
+#copyToast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+
+    background: #333;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    z-index: 9999;
+}
+
+#copyToast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     table {

@@ -24,7 +24,7 @@
                 <a><b>Toggle Dark Mode</b></a>
             
             <div class="button-container">
-                <a href="display_data.php" class="button-link">
+                <a href="index.php" class="button-link">
                     <button class="button">Specs</button>
                     </a>
                 </div>

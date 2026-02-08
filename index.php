@@ -227,9 +227,10 @@ function getRamIcon() {
         <a href="stats.php" class="button-link">
         <button class="button">Stats</button>
         </a>
-        <a href="upload.html" class="button-link">
+        <a href="upload.php" class="button-link">
         <button class="button">Upload</button>
-        </a>        
+        </a>
+            <button class="button" onclick="copyReceiverLink()">Receiver link</button>
         </div>
 
 
@@ -305,6 +306,8 @@ function getRamIcon() {
     <?php endif; ?>
 
     </div>
+
+<div id="copyToast" class="copy-toast">Link copied</div>
 </body>
 <script src="script.js"></script>
 </html>

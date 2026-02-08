@@ -4,13 +4,15 @@ include 'database.php';
 $osDistribution = $conn->query("
     SELECT 
         CASE 
-            WHEN OS LIKE 'Windows%' THEN 'Windows' 
-            ELSE OS 
-        END AS OS, 
-        COUNT(*) as count 
-    FROM system_specs 
+            WHEN OS LIKE 'Windows%' THEN 'Windows'
+            WHEN OS LIKE '%BSD%' THEN 'BSD'
+            ELSE OS
+        END AS OS,
+        COUNT(*) AS count
+    FROM system_specs
     GROUP BY OS
 ");
+
 $osLabels = [];
 $osData = [];
 $totalOs = 0;
@@ -18,12 +20,11 @@ $osCounts = [];
 
 while ($row = $osDistribution->fetch_assoc()) {
     $osName = $row['OS'];
-    if (stripos($osName, 'Windows') === 0) {
-        $osName = 'Windows';
-    }
+
     if (!isset($osCounts[$osName])) {
         $osCounts[$osName] = 0;
     }
+
     $osCounts[$osName] += $row['count'];
     $totalOs += $row['count'];
 }
@@ -32,7 +33,6 @@ foreach ($osCounts as $os => $count) {
     $osLabels[] = $os;
     $osData[] = $count;
 }
-
 
 $cpuDistribution = $conn->query("SELECT cpu, COUNT(*) as count FROM system_specs GROUP BY cpu");
 $cpuCategories = ['AMD' => 0, 'Intel' => 0, 'Apple' => 0, 'ARM' => 0, 'Unknown' => 0];
@@ -184,7 +184,7 @@ $conn->close(); // Close the database connection
         <a><b>Toggle Dark Mode</b></a>
         
         <div class="button-container">
-            <a href="display_data.php" class="button-link">
+            <a href="index.php" class="button-link">
                 <button class="button">Specs</button>
             </a>
         </div>
@@ -218,7 +218,7 @@ $conn->close(); // Close the database connection
                 $cy = 150;
                 $radius = 100;
                 $startAngle = 0;
-                $osColors = ['#f5be04', '#9c9995', '#0766f5', '#07a6f5', '#ff0000', '#00d9ff', '#1968c2'];
+                $osColors = ['#ff0000', '#f5be04', '#9c9995', '#0766f5', '#546732', '#00d9ff', '#1968c2'];
                 echo '<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">';
                 foreach ($osData as $index => $value) {
                     $angle = ($value / $totalOs) * 360;

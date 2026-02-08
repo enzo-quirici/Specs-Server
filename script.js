@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 // Fonction pour activer/désactiver le mode sombre
 function toggleDarkMode() {
     const body = document.body;
@@ -117,4 +118,51 @@ function toggleDarkMode() {
     const switchInput = document.getElementById('darkModeToggle');
     switchInput.addEventListener('change', toggleDarkMode); // Toggle le dark mode lors du changement de l'état du switch
   });
-  
+
+function copyReceiverLink() {
+    let url = window.location.href;
+
+    if (url.includes("index.php")) {
+        url = url.replace("index.php", "receiver.php");
+    } else {
+        url = url.replace(/\/?$/, "/receiver.php");
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showCopyToast).catch(() => {
+            fallbackCopy(url);
+        });
+    } else {
+        fallbackCopy(url);
+    }
+}
+
+function fallbackCopy(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    try {
+        document.execCommand("copy");
+        showCopyToast();
+    } catch (e) {
+        console.error("Copy failed");
+    }
+
+    document.body.removeChild(textarea);
+}
+
+function showCopyToast() {
+    const toast = document.getElementById("copyToast");
+    if (!toast) return;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 1500);
+}

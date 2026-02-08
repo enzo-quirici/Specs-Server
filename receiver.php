@@ -82,17 +82,17 @@ function handleJsonData($jsonData, $conn) {
         );
 
         if ($stmt->execute()) {
-            header("Location: display_data.php?status=success&message=Data%20saved%20successfully");
+            header("Location: index.php?status=success&message=Data%20saved%20successfully");
             exit();
         } else {
-            header("Location: display_data.php?status=error&message=Error%20saving%20data: " . $stmt->error);
+            header("Location: index.php?status=error&message=Error%20saving%20data: " . $stmt->error);
             exit();
         }
 
         $stmt->close();
 
     } else {
-        header("Location: display_data.php?status=error&message=Database%20query%20failed: " . $conn->error);
+        header("Location: index.php?status=error&message=Database%20query%20failed: " . $conn->error);
         exit();
     }
 }
@@ -109,12 +109,12 @@ if (!empty($inputData)) {
         $fileContent = file_get_contents($_FILES['jsonFile']['tmp_name']);
         handleJsonData($fileContent, $conn);
     } else {
-        header("Location: display_data.php?status=error&message=Uploaded%20file%20is%20not%20a%20valid%20JSON%20file");
+        header("Location: index.php?status=error&message=Uploaded%20file%20is%20not%20a%20valid%20JSON%20file");
         exit();
     }
 
 } else {
-    header("Location: display_data.php?status=error&message=No%20JSON%20data%20provided");
+    header("Location: index.php?status=error&message=No%20JSON%20data%20provided");
     exit();
 }
 
