@@ -224,6 +224,8 @@ function getRamIcon() {
         <a><b>Toggle Dark Mode</b></a>
 
         <div class="button-container">
+        <a href="https://www.github.com/enzo-quirici/Specs" class="button-link">
+        <button class="button">Download Specs</button>
         <a href="stats.php" class="button-link">
         <button class="button">Stats</button>
         </a>
